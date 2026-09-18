@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/weather.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class WeatherService {
   static const _baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  // อย่าลืมเอา API Key ของตัวเองมาใส่ตรงนี้แทน YOUR_API_KEY นะครับ
-  static const _apiKey = 'YOUR_API_KEY';
+  static String get _apiKey => dotenv.env['OPENWEATHER_API_KEY'] ?? '';
 
   Future<Weather> fetchWeather(String city) async {
     final uri = Uri.parse('$_baseUrl?q=$city&appid=$_apiKey&units=metric&lang=th');

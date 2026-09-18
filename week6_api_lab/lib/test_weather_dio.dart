@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'services/weather_service_dio.dart';
 
-void main() async {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   try {
     print('กำลังดึงข้อมูลด้วย Dio...');
     final weather = await fetchWeatherWithDio('Bangkok');

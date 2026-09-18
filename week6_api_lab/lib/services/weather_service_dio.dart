@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import '../models/weather.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 Future<Weather> fetchWeatherWithDio(String city) async {
   final dio = Dio(BaseOptions(
     connectTimeout: const Duration(seconds: 10),
@@ -11,7 +13,7 @@ Future<Weather> fetchWeatherWithDio(String city) async {
     // dio แปลง JSON response.data ให้เป็น Map ให้อัตโนมัติ ไม่ต้องเรียก jsonDecode เอง
     final response = await dio.get(
       'https://api.openweathermap.org/data/2.5/weather',
-      queryParameters: {'q': city, 'appid': 'YOUR_API_KEY', 'units': 'metric'},
+      queryParameters: {'q': city, 'appid': dotenv.env['OPENWEATHER_API_KEY'], 'units': 'metric'},
     );
     return Weather.fromJson(response.data as Map<String, dynamic>);
   } on DioException catch (e) {
